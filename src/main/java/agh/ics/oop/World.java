@@ -1,11 +1,12 @@
 package agh.ics.oop;
 
+import java.util.List;
+
+import static agh.ics.oop.OptionsParser.parse;
+
 public class World {
 
     public static void run(MoveDirection[] directions) {
-        //String joinedDirections = String.join(", ", directions);
-        //System.out.print("\n" + joinedDirections);
-        //System.out.println();
 
         for (MoveDirection direction : directions) {
             String text = switch (direction) {
@@ -13,10 +14,10 @@ public class World {
                 case BACKWARD -> "zwierzak do tyłu";
                 case LEFT -> "zwierzak w lewo";
                 case RIGHT -> "zwierzak w prawo";
+                case NONE -> null;
             };
             System.out.println(text);
         }
-
     }
 
     public static MoveDirection[] change(String[] args) {
@@ -28,39 +29,21 @@ public class World {
                 case "b" -> MoveDirection.BACKWARD;
                 case "l" -> MoveDirection.LEFT;
                 case "r" -> MoveDirection.RIGHT;
-                default -> null;
+                default -> MoveDirection.NONE;
             };
             directions[i] = move;
         }
         return directions;
     }
 
-//    public static Directions[] change2(String[] args) {
-//        int n = args.length;
-//        Directions[] directions = new Directions[n];
-//        for (int i = 0; i < n; i++) {
-//            Directions move = switch (args[i]) {
-//                case "f" -> Directions.FORWARD;
-//                case "b" -> Directions.BACKWARD;
-//                case "l" -> Directions.LEFT;
-//                case "r" -> Directions.RIGHT;
-//                default -> null;
-//            };
-//            directions[i] = move;
-//        }
-//
-//        args.stream().forEach((k) ->{
-//            inCase
-//        });
-//        return directions;
-//    }
-
     public static void main(String[] args) {
-        System.out.println("System startuje");
-        MoveDirection[] directions = change(args);
-        //Directions[] directions = change2(args);
-        run(directions);
-        System.out.println("System zakończył działanie");
+        Animal animal = new Animal();
+        System.out.println(animal.toString());
+        List<MoveDirection> directions = parse(args);
+        for(MoveDirection direction : directions){
+            animal.move(direction);
+        }
+        System.out.println(animal);
     }
 }
 

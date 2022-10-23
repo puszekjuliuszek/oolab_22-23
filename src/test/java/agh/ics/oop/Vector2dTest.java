@@ -19,18 +19,11 @@ class Vector2dTest {
         //given
         Vector2d v1 = new Vector2d(1,0);
         Vector2d v2 = new Vector2d(1,0);
-        Vector2d v3 = new Vector2d(1,0);
-        Vector2d v4 = new Vector2d(1,0);
-        Vector2d v5 = new Vector2d(1,0);
         //when
 
         //then
         assertEquals(v1, new Vector2d(1, 0));
         assertNotEquals(v2, new Vector2d(1, 1));
-        assertNotEquals(v3, new Vector2d[5]);
-        assertNotEquals(v4, 1);
-        assertNotEquals(v5, "testString");
-
     }
 
 
@@ -106,27 +99,27 @@ class Vector2dTest {
 
     @Test
     void VectorSubstract_Whenx1y0x0y0_ShouldReturnx1y0() {
-        assertEquals(new Vector2d(1, 0), testVector.subtract(new Vector2d(0, 0)));
+        assertEquals(new Vector2d(1, 0), testVector.substract(new Vector2d(0, 0)));
     }
 
     @Test
     void VectorSubstract_Whenx1y0x0y_5_ShouldReturnx1y5() {
-        assertEquals(new Vector2d(1, 5), testVector.subtract(new Vector2d(0, -5)));
+        assertEquals(new Vector2d(1, 5), testVector.substract(new Vector2d(0, -5)));
     }
 
     @Test
     void VectorSubstract_Whenx1y0x0y5_ShouldReturnx1y_5() {
-        assertEquals(new Vector2d(1, -5), testVector.subtract(new Vector2d(0, 5)));
+        assertEquals(new Vector2d(1, -5), testVector.substract(new Vector2d(0, 5)));
     }
 
     @Test
     void VectorSubstract_Whenx1y0x_4y0_ShouldReturnx5y0() {
-        assertEquals(new Vector2d(5, 0), testVector.subtract(new Vector2d(-4, 0)));
+        assertEquals(new Vector2d(5, 0), testVector.substract(new Vector2d(-4, 0)));
     }
 
     @Test
     void VectorSubstract_Whenx1y0x1y0_ShouldReturnx0y0() {
-        assertEquals(new Vector2d(0, 0), testVector.subtract(new Vector2d(1, 0)));
+        assertEquals(new Vector2d(0, 0), testVector.substract(new Vector2d(1, 0)));
     }
 
     @Test
