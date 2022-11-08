@@ -1,12 +1,19 @@
 package agh.ics.oop;
 
+import java.util.Objects;
+
 public class Animal {
     private MapDirections direction;
     private Vector2d position;
+    static IWorldMap map;
 
-    public Animal() {
+    public Animal(IWorldMap map, Vector2d initialPosition) {
         this.direction = MapDirections.NORTH;
-        this.position = new Vector2d(2, 2);
+        this.position = initialPosition;
+        this.map = map;
+    }
+    public Animal(IWorldMap map){
+        new Animal(map,new Vector2d(2,2));
     }
 
     public Vector2d getPosition() {
@@ -19,44 +26,25 @@ public class Animal {
 
     @Override
     public String toString() {
-        return "Zwierz ma:" + "\n" +
-                "    kierunek = " + direction + "\n" +
-                "    położenie = " + position;
+        return Character.toString(direction.name().charAt(0));
     }
 
-    public boolean isAt(Vector2d position) {
-        return position.equals(this.position);
-    }
-
-    private boolean canMoveForward() {
-        return ((this.direction == MapDirections.NORTH) && (this.position.getY() < 4)) ||
-                ((this.direction == MapDirections.EAST) && (this.position.getX() < 4)) ||
-                ((this.direction == MapDirections.SOUTH) && (this.position.getY() > 0)) ||
-                ((this.direction == MapDirections.WEST) && (this.position.getX() > 0));
-    }
-
-    private boolean canMoveBackward() {
-        return ((this.direction == MapDirections.NORTH) && (this.position.getY() > 0)) ||
-                ((this.direction == MapDirections.EAST) && (this.position.getX() > 0)) ||
-                ((this.direction == MapDirections.SOUTH) && (this.position.getY() < 4)) ||
-                ((this.direction == MapDirections.WEST) && (this.position.getX() < 4));
-    }
+    public boolean isAt(Vector2d position) {return Objects.equals(this.position, position);}
 
     public void move(MoveDirection direction) {
+        Vector2d newPosition = position;
         switch (direction) {
-            case FORWARD -> {
-                if (canMoveForward()) {
-                    position = position.add(this.direction.toUnitVector());
-                }
-            }
-            case BACKWARD -> {
-                if (canMoveBackward()) {
-                    position = position.substract(this.direction.toUnitVector());
-                }
-            }
+            case FORWARD -> newPosition = position.add(this.direction.toUnitVector());
+            case BACKWARD -> newPosition = position.substract(this.direction.toUnitVector());
             case LEFT -> this.direction = this.direction.previous();
             case RIGHT -> this.direction = this.direction.next();
             case NONE -> {}
         }
+        if(map.canMoveTo(newPosition)){
+            position = newPosition;
+            map.place(this);
+        }
+
+
     }
 }

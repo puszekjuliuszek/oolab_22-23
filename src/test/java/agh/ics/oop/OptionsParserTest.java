@@ -15,7 +15,7 @@ class OptionsParserTest {
         String[] arguments = {"f","r","b","l","b","left","right","backward","forward","for","back","bi","ri","test"," ",""};
         MoveDirection[] moveDirections = {MoveDirection.FORWARD,MoveDirection.RIGHT,MoveDirection.BACKWARD,MoveDirection.LEFT,MoveDirection.BACKWARD,MoveDirection.LEFT,MoveDirection.RIGHT,MoveDirection.BACKWARD,MoveDirection.FORWARD};
         List<MoveDirection> goodDirections = Arrays.asList(moveDirections);
-        List <MoveDirection> directions = parse(arguments);
+        MoveDirection[] directions = parse(arguments);
         assertEquals(goodDirections,directions);
     }
 }

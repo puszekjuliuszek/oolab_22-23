@@ -15,13 +15,13 @@ class AnimalTest {
 
     @BeforeEach
     void setUp() {
-        animal = new Animal();
+        animal = new Animal(new RectangularMap(4,4));
     }
 
     @Test
     void moveTest() {
         String[] args = {"f", "r", "b", "l", "b", "left", "right", "backward", "forward", "for", "back", "bi", "ri", "test", " ", ""};
-        List<MoveDirection> directions = parse(args);
+        MoveDirection[] directions = parse(args);
         for (MoveDirection direction : directions) {
             animal.move(direction);
         }
@@ -38,13 +38,13 @@ class AnimalTest {
         String[] args2 = {"b", "b", "b", "b", "b", "b", "b", "b", "b"};
         String[] args3 = {"r", "f", "f", "f", "f", "f", "f", "f", "f"};
         String[] args4 = {"l", "f", "f", "f", "f", "f", "f", "f", "f"};
-        List<MoveDirection> directions1 = parse(args1);
-        List<MoveDirection> directions2 = parse(args2);
-        List<MoveDirection> directions3 = parse(args3);
-        List<MoveDirection> directions4 = parse(args4);
-        Animal animal2 = new Animal();
-        Animal animal3 = new Animal();
-        Animal animal4 = new Animal();
+        MoveDirection[] directions1 = parse(args1);
+        MoveDirection[] directions2 = parse(args2);
+        MoveDirection[] directions3 = parse(args3);
+        MoveDirection[] directions4 = parse(args4);
+        Animal animal2 = new Animal(new RectangularMap(4,4));
+        Animal animal3 = new Animal(new RectangularMap(4,4));
+        Animal animal4 = new Animal(new RectangularMap(4,4));
 
         //when
         for (MoveDirection direction : directions1) {
