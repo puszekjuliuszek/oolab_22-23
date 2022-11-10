@@ -1,6 +1,6 @@
 package agh.ics.oop;
 
-public class SimulationEngine implements IEngine{
+public class SimulationEngine implements IEngine {
     private final MoveDirection[] directions;
     private final IWorldMap map;
     private final Vector2d[] positions;
@@ -19,13 +19,14 @@ public class SimulationEngine implements IEngine{
         return (Animal) map.objectAt(positions[i]);
     }
 
-    public void run(){
+    public void run() {
         int i = 0;
-        for(MoveDirection direction : directions){
-            Animal currentAnimal = (Animal) map.objectAt(positions[i%positions.length]);
+        int n = positions.length;
+        for (MoveDirection direction : directions) {
+            Animal currentAnimal = (Animal) map.objectAt(positions[i % n]);
             currentAnimal.move(direction);
-            positions[i%positions.length]=currentAnimal.getPosition();
-            i+= 1;
+            positions[i % n] = currentAnimal.getPosition();
+            i += 1;
         }
         System.out.println(map);
     }

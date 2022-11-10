@@ -25,6 +25,7 @@ public class RectangularMap implements IWorldMap {
         return mapVisualizer.draw(mapLowerLeft, mapUpperRight);
     }
 
+    @Override
     public boolean canMoveTo(Vector2d position) {
         return (mapLowerLeft.equals(mapLowerLeft.lowerLeft(position))
                 && mapUpperRight.equals(mapUpperRight.upperRight(position))
@@ -39,7 +40,7 @@ public class RectangularMap implements IWorldMap {
         }
         return null;
     }
-
+    @Override
     public boolean place(Animal animal) {
         if (!isOccupied(animal.getPosition())) {
             if (getKey(animal) != null){
@@ -51,12 +52,14 @@ public class RectangularMap implements IWorldMap {
         return false;
     }
 
+    @Override
     public boolean isOccupied(Vector2d position) {
         return (mapLowerLeft.equals(mapLowerLeft.lowerLeft(position))
                 && mapUpperRight.equals(mapUpperRight.upperRight(position))
                 && map.containsKey(position));
     }
 
+    @Override
     public Object objectAt(Vector2d position) {
         return map.get(position);
     }
