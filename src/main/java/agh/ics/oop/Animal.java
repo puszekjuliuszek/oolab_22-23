@@ -2,10 +2,9 @@ package agh.ics.oop;
 
 import java.util.Objects;
 
-public class Animal {
+public class Animal extends AbstractWorldMapElement {
     private MapDirections direction;
-    private Vector2d position;
-    static IWorldMap map;
+    private IWorldMap map;
 
     public Animal(IWorldMap map, Vector2d initialPosition) {
         this.direction = MapDirections.NORTH;
@@ -16,13 +15,11 @@ public class Animal {
         new Animal(map,new Vector2d(2,2));
     }
 
-    public Vector2d getPosition() {
-        return position;
-    }
 
     public MapDirections getDirection() {
         return direction;
     }
+
 
     @Override
     public String toString() {
@@ -30,6 +27,7 @@ public class Animal {
     }
 
     public boolean isAt(Vector2d position) {return Objects.equals(this.position, position);}
+
 
     public void move(MoveDirection direction) {
         Vector2d newPosition = position;
@@ -43,6 +41,9 @@ public class Animal {
         if(map.canMoveTo(newPosition)){
             position = newPosition;
             map.place(this);
+            if(map.isGrass(newPosition)){
+                ((GrassField)map).eatGrass(newPosition);
+            }
         }
 
 
