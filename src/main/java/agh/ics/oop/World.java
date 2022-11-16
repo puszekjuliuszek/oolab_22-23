@@ -1,66 +1,18 @@
 package agh.ics.oop;
 
+import static agh.ics.oop.OptionsParser.parse;
+
 public class World {
+    public static final Vector2d LOWER_BOUND = new Vector2d(0,0);
+    public static final Vector2d UPPER_BOUND = new Vector2d(4,4);
 
-    public static void run(MoveDirection[] directions) {
-        //String joinedDirections = String.join(", ", directions);
-        //System.out.print("\n" + joinedDirections);
-        //System.out.println();
-
-        for (MoveDirection direction : directions) {
-            String text = switch (direction) {
-                case FORWARD -> "zwierzak do przodu";
-                case BACKWARD -> "zwierzak do tyłu";
-                case LEFT -> "zwierzak w lewo";
-                case RIGHT -> "zwierzak w prawo";
-            };
-            System.out.println(text);
-        }
-
-    }
-
-    public static MoveDirection[] change(String[] args) {
-        int n = args.length;
-        MoveDirection[] directions = new MoveDirection[n];
-        for (int i = 0; i < n; i++) {
-            MoveDirection move = switch (args[i]) {
-                case "f" -> MoveDirection.FORWARD;
-                case "b" -> MoveDirection.BACKWARD;
-                case "l" -> MoveDirection.LEFT;
-                case "r" -> MoveDirection.RIGHT;
-                default -> null;
-            };
-            directions[i] = move;
-        }
-        return directions;
-    }
-
-//    public static Directions[] change2(String[] args) {
-//        int n = args.length;
-//        Directions[] directions = new Directions[n];
-//        for (int i = 0; i < n; i++) {
-//            Directions move = switch (args[i]) {
-//                case "f" -> Directions.FORWARD;
-//                case "b" -> Directions.BACKWARD;
-//                case "l" -> Directions.LEFT;
-//                case "r" -> Directions.RIGHT;
-//                default -> null;
-//            };
-//            directions[i] = move;
-//        }
-//
-//        args.stream().forEach((k) ->{
-//            inCase
-//        });
-//        return directions;
-//    }
 
     public static void main(String[] args) {
-        System.out.println("System startuje");
-        MoveDirection[] directions = change(args);
-        //Directions[] directions = change2(args);
-        run(directions);
-        System.out.println("System zakończył działanie");
+        MoveDirection[] directions = parse(args);
+        IWorldMap map = new RectangularMap(10, 5);
+        Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
+        IEngine engine = new SimulationEngine(directions, map, positions);
+        engine.run();
     }
 }
 
