@@ -5,25 +5,49 @@ import java.util.Map;
 
 public abstract class AbstractWorldMap implements IWorldMap {
     protected final Map<Vector2d, Animal> animalMap;
-    protected Vector2d mapLowerLeft;
-    protected Vector2d mapUpperRight;
     protected final MapVisualizer mapVisualizer;
 
-    protected AbstractWorldMap(Vector2d rightTop,Vector2d leftBottom) {
-        mapUpperRight = rightTop;
-        mapLowerLeft = leftBottom;
+    protected AbstractWorldMap() {
         animalMap = new HashMap<>();
         mapVisualizer = new MapVisualizer(this);
     }
 
-    protected Vector2d getKey(Animal animal){
+    protected Vector2d getKey(Animal animal) {
         for (Vector2d key : animalMap.keySet()) {
-            if(animalMap.get(key).equals(animal)){
+            if (animalMap.get(key).equals(animal)) {
                 return key;
             }
         }
         return null;
     }
 
-    public abstract Object objectAt(Vector2d position);
+
+    @Override
+    public String toString() {
+        return mapVisualizer.draw(this.getMapLowerLeft(), this.getMapUpperRight());
+    }
+
+    @Override
+    public Object objectAt(Vector2d position) {
+        return animalMap.get(position);
+    }
+
+    protected abstract Vector2d getMapLowerLeft();
+
+    protected abstract Vector2d getMapUpperRight();
+
+    public boolean isOccupied(Vector2d position) {
+        return (animalMap.containsKey(position));
+    }
+
+    public boolean place(Animal animal) {
+        if (!isOccupied(animal.getPosition())) {
+            if (getKey(animal) != null) {
+                animalMap.remove(getKey(animal));
+            }
+            animalMap.put(animal.getPosition(), animal);
+            return true;
+        }
+        return false;
+    }
 }
