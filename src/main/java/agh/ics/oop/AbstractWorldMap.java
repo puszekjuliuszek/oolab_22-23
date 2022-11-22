@@ -3,7 +3,7 @@ package agh.ics.oop;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractWorldMap implements IWorldMap {
+public abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObserver {
     protected final Map<Vector2d, Animal> animalMap;
     protected final MapVisualizer mapVisualizer;
 
@@ -25,6 +25,13 @@ public abstract class AbstractWorldMap implements IWorldMap {
     @Override
     public String toString() {
         return mapVisualizer.draw(this.getMapLowerLeft(), this.getMapUpperRight());
+    }
+
+    @Override
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition){
+        Animal animal = animalMap.get(oldPosition);
+        animalMap.remove(oldPosition);
+        animalMap.put(newPosition, animal);
     }
 
     @Override

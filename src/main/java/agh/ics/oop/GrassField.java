@@ -3,7 +3,6 @@ package agh.ics.oop;
 import java.lang.Math;
 import java.util.*;
 
-//can move dla każdego osobne
 
 
 
@@ -88,5 +87,12 @@ public class GrassField extends AbstractWorldMap {
     public void eatGrass(Vector2d position) {
         grassMap.remove(position);
         placeInitGrass(1);
+    }
+
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition){
+        super.positionChanged(oldPosition,newPosition);
+        if(isGrass(newPosition)){
+            eatGrass(newPosition);
+        }
     }
 }
