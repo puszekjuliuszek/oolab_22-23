@@ -10,7 +10,6 @@ public class GrassField extends AbstractWorldMap {
     private final Map<Vector2d, Grass> grassMap = new HashMap<>();
 
     public GrassField(int amountOfGrass) {
-        super();
         placeInitGrass(amountOfGrass);
     }
 
@@ -94,5 +93,11 @@ public class GrassField extends AbstractWorldMap {
         if(isGrass(newPosition)){
             eatGrass(newPosition);
         }
+    }
+
+    @Override
+    public boolean place(Animal animal) {
+        eatGrass(animal.getPosition());
+        return super.place(animal);
     }
 }
