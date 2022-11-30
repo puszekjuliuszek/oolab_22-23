@@ -26,6 +26,7 @@ public interface IWorldMap {
      */
     boolean place(Animal animal);
 
+
     /**
      * Return true if given position on the map is occupied. Should not be
      * confused with canMove since there might be empty positions where the animal
@@ -45,4 +46,8 @@ public interface IWorldMap {
      * @return Object or null if the position is not occupied.
      */
     Object objectAt(Vector2d position);
+
+    default boolean isGrass(Vector2d position){
+        return false;
+    }
 }
