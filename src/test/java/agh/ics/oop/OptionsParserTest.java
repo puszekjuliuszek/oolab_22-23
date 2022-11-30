@@ -11,11 +11,22 @@ import static org.junit.jupiter.api.Assertions.*;
 class OptionsParserTest {
 
     @Test
-    void parseTest() {
-        String[] arguments = {"f","r","b","l","b","left","right","backward","forward","for","back","bi","ri","test"," ",""};
-        MoveDirection[] moveDirections = {MoveDirection.FORWARD,MoveDirection.RIGHT,MoveDirection.BACKWARD,MoveDirection.LEFT,MoveDirection.BACKWARD,MoveDirection.LEFT,MoveDirection.RIGHT,MoveDirection.BACKWARD,MoveDirection.FORWARD};
-        List<MoveDirection> goodDirections = Arrays.asList(moveDirections);
+    void badParseTest() {
+        OptionsParser parser = new OptionsParser();
+        String[] arguments = {"f", "r", "b", "l", "b", "left", "right", "backward", "forward", "for", "back", "bi", "ri", "test", " ", ""};
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            parser.parse(arguments);
+        });
+        assertEquals("for" + " is not legal move specification", exception.getMessage());
+
+
+    }
+
+    @Test
+    void goodParseTest() {
+        String[] arguments = {"f", "r", "b", "l", "b", "left", "right", "backward", "forward"};
+        MoveDirection[] goodDirections = {MoveDirection.FORWARD, MoveDirection.RIGHT, MoveDirection.BACKWARD, MoveDirection.LEFT, MoveDirection.BACKWARD, MoveDirection.LEFT, MoveDirection.RIGHT, MoveDirection.BACKWARD, MoveDirection.FORWARD};
         MoveDirection[] directions = parse(arguments);
-        assertEquals(goodDirections,directions);
+        assertArrayEquals(directions, goodDirections);
     }
 }

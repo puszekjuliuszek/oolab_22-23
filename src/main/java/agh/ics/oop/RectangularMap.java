@@ -36,11 +36,11 @@ public class RectangularMap extends AbstractWorldMap {
     }
 
 
-    protected Vector2d getMapLowerLeft() {
+    public Vector2d getMapLowerLeft() {
         return this.mapLowerLeft;
     }
 
-    protected Vector2d getMapUpperRight() {
+    public Vector2d getMapUpperRight() {
         return this.mapUpperRight;
     }
 }

@@ -35,6 +35,5 @@ public class SimulationEngine implements IEngine {
             }
             System.out.println(map);
         }
-        //System.out.println(map);
     }
 }
