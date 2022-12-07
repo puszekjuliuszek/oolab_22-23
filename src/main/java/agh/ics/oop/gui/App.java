@@ -119,7 +119,7 @@ public class App extends Application {
         button.setOnAction(event -> {
             String[] args = textField.getText().split(" ");
             directions = parse(args);
-            IEngine engine = new SimulationEngine(directions, map, positions,1000);
+            IEngine engine = new SimulationEngine(directions, map, positions,1000,this);
             Thread thread = new Thread((Runnable) engine);
             thread.start();
         });

@@ -1,10 +1,13 @@
 package agh.ics.oop;
 
+import agh.ics.oop.gui.App;
+
 public class SimulationEngine implements IEngine, Runnable {
     private final MoveDirection[] directions;
     private final IWorldMap map;
     private final Vector2d[] positions;
     private int moveDelay;
+    private App app;
 
     public SimulationEngine(MoveDirection[] directions, IWorldMap map, Vector2d[] positions) {
         this.directions = directions;
@@ -19,8 +22,9 @@ public class SimulationEngine implements IEngine, Runnable {
         }
     }
 
-    public SimulationEngine(MoveDirection[] moveDirections, IWorldMap map, Vector2d[] animalsVectors, int moveDelay){
+    public SimulationEngine(MoveDirection[] moveDirections, IWorldMap map, Vector2d[] animalsVectors, int moveDelay, App app){
         this(moveDirections, map, animalsVectors);
+        this.app = app;
         this.moveDelay = moveDelay;
     }
 
@@ -43,6 +47,7 @@ public class SimulationEngine implements IEngine, Runnable {
                 positions[i % n] = currentAnimal.getPosition();
                 i += 1;
             }
+            app.refreshMap();
             System.out.println(map);
             try{
                 Thread.sleep(moveDelay);
