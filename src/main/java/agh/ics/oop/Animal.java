@@ -28,7 +28,12 @@ public class Animal extends AbstractWorldMapElement {
     public String toString() {
         return Character.toString(direction.name().charAt(0));
     }
-
+    public String getImagePath(){
+        return toString();
+    }
+    public String getDesc(){
+        return "Z " + position.toString();
+    }
     public boolean isAt(Vector2d position) {return Objects.equals(this.position, position);}
 
 
