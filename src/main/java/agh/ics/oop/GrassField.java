@@ -10,7 +10,6 @@ public class GrassField extends AbstractWorldMap {
     private final Map<Vector2d, Grass> grassMap = new HashMap<>();
 
     public GrassField(int amountOfGrass) {
-        super();
         placeInitGrass(amountOfGrass);
     }
 
@@ -20,6 +19,7 @@ public class GrassField extends AbstractWorldMap {
         for (int i = 0; i < bound; i++) {
             for (int j = 0; j < bound; j++) {
                 grassPositions.add(new Vector2d(i, j));
+                mapBoundary.updateMapBoundary(new Vector2d(i, j));
             }
         }
 
@@ -58,26 +58,12 @@ public class GrassField extends AbstractWorldMap {
         return super.objectAt(position);
     }
 
-    protected Vector2d getMapLowerLeft() {
-        Vector2d mapLowerLeft = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
-        for (Vector2d position : grassMap.keySet()) {
-            mapLowerLeft = mapLowerLeft.lowerLeft(position);
-        }
-        for (Vector2d position : animalMap.keySet()) {
-            mapLowerLeft = mapLowerLeft.lowerLeft(position);
-        }
-        return mapLowerLeft;
+    public Vector2d getMapLowerLeft() {
+        return this.mapBoundary.getLowerLeft();
     }
 
-    protected Vector2d getMapUpperRight() {
-        Vector2d mapUpperRight = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
-        for (Vector2d position : grassMap.keySet()) {
-            mapUpperRight = mapUpperRight.upperRight(position);
-        }
-        for (Vector2d position : animalMap.keySet()) {
-            mapUpperRight = mapUpperRight.upperRight(position);
-        }
-        return mapUpperRight;
+    public Vector2d getMapUpperRight() {
+        return this.mapBoundary.getUpperRight();
     }
 
     public boolean isGrass(Vector2d position) {
@@ -86,6 +72,7 @@ public class GrassField extends AbstractWorldMap {
 
     public void eatGrass(Vector2d position) {
         grassMap.remove(position);
+        mapBoundary.removeMapBoundary(position);
         placeInitGrass(1);
     }
 
@@ -94,5 +81,11 @@ public class GrassField extends AbstractWorldMap {
         if(isGrass(newPosition)){
             eatGrass(newPosition);
         }
+    }
+
+    @Override
+    public boolean place(Animal animal) {
+        eatGrass(animal.getPosition());
+        return super.place(animal);
     }
 }

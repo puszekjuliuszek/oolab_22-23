@@ -13,7 +13,6 @@ public class Animal extends AbstractWorldMapElement {
         this.direction = MapDirections.NORTH;
         this.position = initialPosition;
         this.map = map;
-        addObserver((IPositionChangeObserver) map);
     }
     public Animal(IWorldMap map){
         new Animal(map,new Vector2d(2,2));
@@ -50,14 +49,14 @@ public class Animal extends AbstractWorldMapElement {
 
     }
 
-    void removeObserver(IPositionChangeObserver observer) {
+    public void removeObserver(IPositionChangeObserver observer) {
         observers.remove(observer);
     }
-    void addObserver(IPositionChangeObserver observer) {
+    public void addObserver(IPositionChangeObserver observer) {
         observers.add(observer);
     }
 
-    void positionChanged(Vector2d oldPosition, Vector2d newPosition){
+    private void positionChanged(Vector2d oldPosition, Vector2d newPosition){
         for (IPositionChangeObserver observer : observers){
             observer.positionChanged(oldPosition, newPosition);
         }
