@@ -19,7 +19,7 @@ public class GrassField extends AbstractWorldMap {
         for (int i = 0; i < bound; i++) {
             for (int j = 0; j < bound; j++) {
                 grassPositions.add(new Vector2d(i, j));
-                mapBoundary.updateMapBoundary(new Vector2d(i, j));
+                //mapBoundary.updateMapBoundary(new Vector2d(i, j));
             }
         }
 
@@ -28,6 +28,7 @@ public class GrassField extends AbstractWorldMap {
             int randomIndex = random.nextInt(grassPositions.size() - 0) + 0;
             Vector2d grassPosition = grassPositions.get(randomIndex);
             grassMap.put(grassPosition, new Grass(grassPosition));
+            mapBoundary.updateMapBoundary(grassPosition);
             grassPositions.remove(grassPosition);
         }
 
@@ -51,7 +52,7 @@ public class GrassField extends AbstractWorldMap {
 
 
     @Override
-    public Object objectAt(Vector2d position) {
+    public IMapElement objectAt(Vector2d position) {
         if (super.objectAt(position) == null) {
             return grassMap.get(position);
         }
@@ -72,7 +73,6 @@ public class GrassField extends AbstractWorldMap {
 
     public void eatGrass(Vector2d position) {
         grassMap.remove(position);
-        mapBoundary.removeMapBoundary(position);
         placeInitGrass(1);
     }
 

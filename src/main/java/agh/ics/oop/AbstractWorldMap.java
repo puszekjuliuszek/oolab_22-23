@@ -31,13 +31,13 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     @Override
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
         Animal animal = animalMap.get(oldPosition);
+        mapBoundary.positionChanged(oldPosition,newPosition);
         animalMap.remove(oldPosition);
         animalMap.put(newPosition, animal);
-        this.mapBoundary.positionChanged(oldPosition, newPosition);
     }
 
     @Override
-    public Object objectAt(Vector2d position) {
+    public IMapElement objectAt(Vector2d position) {
         return animalMap.get(position);
     }
 
@@ -54,6 +54,7 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
         if (this.canMoveTo(animal.getPosition())) {
             animalMap.put(animal.getPosition(), animal);
             animal.addObserver(this);
+            animal.addObserver(this.mapBoundary);
             mapBoundary.updateMapBoundary(animal.getPosition());
             return true;
         }
