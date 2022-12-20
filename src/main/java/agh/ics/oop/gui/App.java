@@ -15,7 +15,7 @@ import java.io.FileNotFoundException;
 
 import static agh.ics.oop.OptionsParser.parse;
 
-public class App extends Application {
+public class App extends Application {  
     private AbstractWorldMap map;
     private int xMin;
     private int yMin;
